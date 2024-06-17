@@ -1,4 +1,4 @@
-//updated
+// updated...
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -139,9 +139,10 @@ class CarRentalSystem {
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
 
-        if (name.equalsIgnoreCase("admin")) {
             System.out.println("You are able to add cars.");
-
+            Car car1 = new Car("C001", "Toyota", "Camry", 60.0);
+            Car car2 = new Car("C002", "Honda", "Accord", 70.0);
+            Car car3 = new Car("C003", "Mahindra", "Thar", 150.0);
             Car car4 = new Car("C004", "Mahindra", "Bolero", 70.0);
             Car car5 = new Car("C005", "Maruti", "Swift", 50.0);
             Car car6 = new Car("C006", "Tata", "Nexon", 60.0);
@@ -149,7 +150,9 @@ class CarRentalSystem {
             Car car8 = new Car("C008", "Mahindra", "Scorpio", 60.0);
             Car car9 = new Car("C009", "Hyundai", "Creta", 60.0);
             Car car10 = new Car("C010", "Honda", "City", 60.0);
-            
+            addCar(car1);
+            addCar(car2);
+            addCar(car3);
             addCar(car4);
             addCar(car5);
             addCar(car6);
@@ -159,51 +162,65 @@ class CarRentalSystem {
             addCar(car10);
 
             System.out.println("Cars added successfully.");
-        } else {
-            System.out.println("You are not authorized to add cars.");
-        }
+       
     }
+    public void addmoreCars() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter car ID: ");
+        String Id = scanner.nextLine();
     
-    // public void addcars(){
-    //     System.out.print("Enter your name: ");
-    //     String name=scanner.nextInt();
-    //     if(name=="Admin"){
-    //         System.out.println("You are able to add cars");
-    //         Car car4 = new Car("C004", "bolero", "ZLX", 70.0); // Different base price per day for each car
-    //         Car car5 = new Car("C005", "maruti", "swift", 50.0); // Different base price per day for each car
-    //         Car car6 = new Car("C006", "suzuki", "alto", 40.0); // Different base price per day for each car
-    //         Car car7 = new Car("C007", "nexa", "baleno", 60.0); // Different base price per day for each car
-    //         // Car car8 = new Car("C008", "Toyota", "Camry", 60.0); // Different base price per day for each car
-    //         // Car car9 = new Car("C009", "Toyota", "Camry", 60.0); // Different base price per day for each car
-    //         // Car car10 = new Car("C010", "Toyota", "Camry", 60.0); // Different base price per day for each car
-    //         // Car car11 = new Car("C011", "Toyota", "Camry", 60.0); // Different base price per day for each car
-    //         rentalSystem.addCar(car4);
-    //     rentalSystem.addCar(car5);
-    //     rentalSystem.addCar(car6);
-    //     rentalSystem.addCar(car7);
-    //     }
-    //     else{
-    //         System.out.println("you are not able to add more cars!");
-    //     }
-    // }
+        boolean carIdExists = false;
+        for (Car car : cars) {
+            if (car.getCarId().equals(Id)) {
+                carIdExists = true;                break;
+            }
+        }
+    
+        if (carIdExists) {
+            System.out.println("This car ID is already available.");
+        } else {
+        System.out.print("Enter brand: ");
+        String brand = scanner.nextLine();
+        
+        System.out.print("Enter model: ");
+        String model = scanner.nextLine();
+        
+        System.out.print("Enter base price per day: ");
+        double basePricePerDay = scanner.nextDouble();
+        scanner.nextLine(); 
+        
+        Car car = new Car(Id, brand, model, basePricePerDay);
+        addCar(car);
+        System.out.println("Car added successfully: " + Id + " - " + brand + " " + model);
+    }
+}
+
+    public void showcars(){
+                    System.out.println(
+                    "\"C001\" - \"Toyota Camry\r\n"+//
+                    "\"C002\" - \"Honda Accord\r\n"+//
+                    "\"C003\" - \"Mahindra Thar\r\n"+//
+                    "\"C004\" - \"Mahindra Bolero\r\n"+//
+                    "\"C005\" - \"Maruti Swift\r\n"+//
+                    "\"C006\" - \"Tata Nexon\r\n"+//
+                    "\"C007\" - \"Nexa Baleno\r\n"+//
+                    "\"C008\" - \"Mahindra Scorpio\r\n"+//
+                    "\"C009\" - \"Hyundai Creta\r\n"+//
+                    "\"C010\" - \"Honda City;"
+                    );
+    }
+
 
     public void menu() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("===== Welcome to Car Rental System =====");
-            // System.out.println("Please Enter your name:");
-            // String name=scanner.nextLine();
-            // String name="admin";
-            // if(scanner==admin){
-            //     System.out.println("You are able to add cars");
-            // }
-          
-            
             System.out.println("1. Rent a Car");
             System.out.println("2. Return a Car");
             System.out.println("3. Exit");
-            System.out.println("4. Add cars");
+            System.out.println("4. Add more cars");
+            System.out.println("5. Show cars");
 
             System.out.print("Enter your choice: ");
 
@@ -216,6 +233,7 @@ class CarRentalSystem {
                 String customerName = scanner.nextLine();
 
                 System.out.println("\nAvailable Cars:");
+                showcars();
                 for (Car car : cars) {
                     if (car.isAvailable()) {
                         System.out.println(car.getCarId() + " - " + car.getBrand() + " " + car.getModel());
@@ -296,10 +314,14 @@ class CarRentalSystem {
             }
              else if (choice == 4) {
                 System.out.println("Adding more cars....");
-                addCars();
+                addmoreCars();
             }
-            else if(choice==4){
+            else if(choice==3){
                 break;
+            }
+            else if(choice==5){
+                System.out.println("The following cars are available");
+                showcars();
             }
             else {
                 System.out.println("Invalid choice. Please enter a valid option.");
@@ -314,13 +336,8 @@ public class proj1{
     public static void main(String[] args) {
         CarRentalSystem rentalSystem = new CarRentalSystem();
 
-        Car car1 = new Car("C001", "Toyota", "Camry", 60.0); // Different base price per day for each car
-        Car car2 = new Car("C002", "Honda", "Accord", 70.0);
-        Car car3 = new Car("C003", "Mahindra", "Thar", 150.0);
-        rentalSystem.addCar(car1);
-        rentalSystem.addCar(car2);
-        rentalSystem.addCar(car3);
-        rentalSystem.addCars();
+        
+        // rentalSystem.addCars();
         // addcars();
         rentalSystem.menu();
     }
